@@ -4,13 +4,13 @@ const app = require('../../index');
 
 test('GET /shoes starts empty', async () => {
   const res = await request(app).get('/shoes');
+
   expect(res.statusCode).toBe(200);
   expect(res.body).toEqual([]);
 });
 
 test('POST /shoes creates a shoe entry with an id', async () => {
-  const shoe = {name: 'Jordan 1 Retro'};
-  const res = await request(app).post('/shoes').send(shoe);
+  const res = await request(app).post('/shoes').send({name: 'Jordan 1 Retro'});
 
   expect(res.statusCode).toBe(201);
 
