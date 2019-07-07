@@ -30,4 +30,8 @@ async function create(name) {
   };
 }
 
-module.exports = {findAll: findAll, findById: findById, create: create};
+async function addTrueToSizeReading(shoeId, reading) {
+  await pool.query('INSERT INTO true_to_size_readings (shoe_id, true_to_size) VALUES ($1, $2)', [shoeId, reading]);
+}
+
+module.exports = {findAll: findAll, findById: findById, create: create, addTrueToSizeReading: addTrueToSizeReading};
