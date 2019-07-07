@@ -45,3 +45,13 @@ test('Created shoes show up in the overall list', async () => {
       toEqual(expect.arrayContaining(['Jordan 1 Retro', 'Nike React Presto']));
   expect(res.body[0].id).not.toBe(res.body[1].id);
 });
+
+test('Existing shoes are retrievable', async () => {
+  const creationRes = await request(app).post('/shoes').send({name: 'Jordan 1 Retro'});
+  const newId = creationRes.body.id;
+
+  const res = await request(app).get('/shoes/' + newId);
+
+  expect(res.body.id).toBe(newId);
+  expect(res.body.name).toBe('Jordan 1 Retro');
+});
