@@ -6,9 +6,10 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  console.log(req.body);
   res.status(201).send({
     id: 1,
-    name: 'Jordan 1 Retro'
+    name: req.body.name
   });
 });
 

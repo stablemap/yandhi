@@ -10,7 +10,7 @@ test('GET /shoes starts empty', async () => {
 
 test('POST /shoes creates a shoe entry with an id', async () => {
   const shoe = {name: 'Jordan 1 Retro'};
-  const res = await request(app).post('/shoes', shoe);
+  const res = await request(app).post('/shoes').send(shoe);
 
   expect(res.statusCode).toBe(201);
 
