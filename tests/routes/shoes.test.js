@@ -33,3 +33,15 @@ test('POST /shoes returns a new shoe object with the given name and a new id', a
 
   expect(res.body.name).toBe('Jordan 1 Retro');
 });
+
+test('Created shoes show up in the overall list', async () => {
+  await request(app).post('/shoes').send({name: 'Jordan 1 Retro'});
+  await request(app).post('/shoes').send({name: 'Nike React Presto'});
+
+  const res = await request(app).get('/shoes');
+
+  expect(res.body).toHaveLength(2);
+  expect(res.body.map(shoe => shoe.name)).
+      toEqual(expect.arrayContaining(['Jordan 1 Retro', 'Nike React Presto']));
+  expect(res.body[0].id).not.toBe(res.body[1].id);
+});

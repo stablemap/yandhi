@@ -3,8 +3,9 @@ const router = express.Router();
 
 const shoeRepository = require('../data/shoes');
 
-router.get('/', (req, res) => {
-  res.send([]);
+router.get('/', async (req, res) => {
+  const shoes = await shoeRepository.findAll();
+  res.send(shoes);
 });
 
 router.post('/', async (req, res) => {
