@@ -7,18 +7,14 @@ const pool = new Pool({
 });
 
 async function findAll() {
-  const res = await pool.query('SELECT id, name FROM shoes');
+  const res = await pool.query('SELECT id, name, avg(true_to_size) AS true_to_size_avg FROM shoes LEFT JOIN true_to_size_readings ON id = shoe_id GROUP BY id');
 
   return res.rows;
 }
 
 async function findById(id) {
-  const res = await pool.query('SELECT name FROM shoes WHERE id = $1', [id]);
-
-  return {
-    id: id,
-    name: res.rows[0].name
-  };
+  const res = await pool.query('SELECT id, name, avg(true_to_size) AS true_to_size_avg FROM shoes LEFT JOIN true_to_size_readings ON id = shoe_id WHERE id = $1 GROUP BY id', [id]);
+  return res.rows[0];
 }
 
 async function create(name) {

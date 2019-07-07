@@ -52,6 +52,8 @@ test('Existing shoes are retrievable', async () => {
 
   const res = await request(app).get('/shoes/' + newId);
 
+  expect(res.statusCode).toBe(200);
+  console.log(res.body);
   expect(res.body.id).toBe(newId);
   expect(res.body.name).toBe('Jordan 1 Retro');
 });
@@ -60,9 +62,13 @@ test('Can add true-to-size readings to existing shoes', async () => {
   const creationRes = await request(app).post('/shoes').send({name: 'Jordan 1 Retro'});
   const newId = creationRes.body.id;
 
-  const res = await request(app).post('/shoes/' + newId + "/add_true_to_size").send({
+  const sizeRes = await request(app).post('/shoes/' + newId + "/add_true_to_size").send({
     reading: 2
   });
 
-  expect(res.statusCode).toBe(204);
+  expect(sizeRes.statusCode).toBe(204);
+
+  const shoeRes = await request(app).get('/shoes/' + newId);
+
+  expect(shoeRes.body.true_to_size_avg).toBe(2);
 });
