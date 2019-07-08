@@ -12,7 +12,7 @@ npm run test
 
 This is fairly simple. Shoes are created by sending a POST request to `/shoes`. The JSON body should contain the name of the shoe.
 
-```
+```json
 {
   "name": "Jordan 1 Retro"
 }
@@ -20,7 +20,7 @@ This is fairly simple. Shoes are created by sending a POST request to `/shoes`. 
 
 If this succeeds then the client receives a 201 status code and a shoe id:
 
-```
+```json
 {
   "id": 1,
   "name": "Jordan 1 Retro"
@@ -29,7 +29,7 @@ If this succeeds then the client receives a 201 status code and a shoe id:
 
 We can then send in true-to-size readings with a POST to `/shoes/1/add_true_to_size` with a body like the following:
 
-```
+```json
 {
   "reading": 3
 }
