@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const shoeRepository = require('../data/shoes');
+const shoeRepository = require('../repositories/shoes');
 
 router.get('/', async (req, res) => {
   const shoes = await shoeRepository.findAll();
