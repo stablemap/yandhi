@@ -1,17 +1,23 @@
 {
   "name": "yandhi",
   "version": "1.0.0",
+  "description": "This is a response to the true-to-size challenge.",
   "main": "index.js",
-  "devDependencies": {
-    "jest": "^24.8.0",
-    "supertest": "^4.0.2"
+  "directories": {
+    "test": "tests"
   },
   "scripts": {
     "test": "jest"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "pg": "^7.11.0"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2"
   }
 }

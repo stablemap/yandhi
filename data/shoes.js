@@ -1,6 +1,8 @@
-const { Pool } = require('pg');
+const { Pool, types } = require('pg');
 
-const connectionString = 'postgresql://Kemper:@localhost/stockx';
+types.setTypeParser(1700, val => parseFloat(val));
+
+const connectionString = process.env.PG_STRING;
 
 const pool = new Pool({
   connectionString: connectionString

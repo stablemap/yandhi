@@ -1,7 +1,8 @@
 const request = require('supertest');
 const { Pool } = require('pg');
 
-const connectionString = 'postgresql://Kemper:@localhost/stockx';
+console.log(process.env.PG_STRING);
+const connectionString = process.env.PG_STRING;
 
 const pool = new Pool({
   connectionString: connectionString
