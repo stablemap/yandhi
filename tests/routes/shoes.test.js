@@ -10,7 +10,7 @@ const pool = new Pool({
 
 beforeEach(() => pool.query('DELETE FROM shoes'));
 
-const app = require('../../index');
+const app = require('../../app');
 
 afterAll(() => {
   pool.end();
