@@ -1,7 +1,6 @@
 const request = require('supertest');
 const { Pool } = require('pg');
 
-console.log(process.env.PG_STRING);
 const connectionString = process.env.PG_STRING;
 
 const pool = new Pool({
@@ -33,6 +32,26 @@ test('POST /shoes returns a new shoe object with the given name and a new id', a
   expect(id).toBeGreaterThan(0);
 
   expect(res.body.name).toBe('Jordan 1 Retro');
+});
+
+test('POST /shoes requires a name', async () => {
+  const res = await request(app).post('/shoes').send({});
+
+  expect(res.statusCode).toBe(400);
+});
+
+test('Shoe names must be strings', async () => {
+  const res = await request(app).post('/shoes').send({name: 7});
+
+  expect(res.statusCode).toBe(400);
+});
+
+
+test('Can\'t duplicate shoe names', async () => {
+  const res1 = await request(app).post('/shoes').send({name: 'Jordan 1 Retro'});
+  const res2 = await request(app).post('/shoes').send({name: 'Jordan 1 Retro'});
+
+  expect(res2.statusCode).toBe(400);
 });
 
 test('Created shoes show up in the overall list', async () => {
@@ -72,4 +91,15 @@ test('Can add true-to-size readings to existing shoes', async () => {
   const shoeRes = await request(app).get('/shoes/' + newId);
 
   expect(shoeRes.body.true_to_size_avg).toBe(2);
+});
+
+test('True-to-size readings must be in the valid range', async () => {
+  const creationRes = await request(app).post('/shoes').send({name: 'Jordan 1 Retro'});
+  const newId = creationRes.body.id;
+
+  const sizeRes = await request(app).post('/shoes/' + newId + "/add_true_to_size").send({
+    reading: -1
+  });
+
+  expect(sizeRes.statusCode).toBe(400);
 });

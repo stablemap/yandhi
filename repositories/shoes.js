@@ -16,7 +16,7 @@ async function findAll() {
 
 async function findById(id) {
   const res = await pool.query('SELECT id, name, avg(true_to_size) AS true_to_size_avg FROM shoes LEFT JOIN true_to_size_readings ON id = shoe_id WHERE id = $1 GROUP BY id', [id]);
-  return res.rows[0];
+  return res.rows[0] || null;
 }
 
 async function create(name) {
@@ -28,8 +28,13 @@ async function create(name) {
   };
 }
 
+async function findByName(name) {
+  const res = await pool.query('SELECT id, name, avg(true_to_size) AS true_to_size_avg FROM shoes LEFT JOIN true_to_size_readings ON id = shoe_id WHERE name = $1 GROUP BY id', [name]);
+  return res.rows[0] || null;
+}
+
 async function addTrueToSizeReading(shoeId, reading) {
   await pool.query('INSERT INTO true_to_size_readings (shoe_id, true_to_size) VALUES ($1, $2)', [shoeId, reading]);
 }
 
-module.exports = {findAll: findAll, findById: findById, create: create, addTrueToSizeReading: addTrueToSizeReading};
+module.exports = {findAll: findAll, findById: findById, findByName: findByName, create: create, addTrueToSizeReading: addTrueToSizeReading};
