@@ -8,6 +8,16 @@ To run the rests, make sure that `PG_STRING` points to an appropriate test datab
 npm run test
 ```
 
+### Containers
+
+To make setup easy there are Dockerfiles for both the [database](postgres/Dockerfile) and [application](Dockerfile), as well as a compose file making use of these. For this, run
+
+```
+docker-compose up
+```
+
+The app should be available on port 8080 of the host machine, and it will be automatically connected to the Postgres container.
+
 ### API
 
 This is fairly simple. Shoes are created by sending a POST request to `/shoes`. The JSON body should contain the name of the shoe.

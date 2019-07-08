@@ -4,6 +4,8 @@ types.setTypeParser(1700, val => parseFloat(val));
 
 const connectionString = process.env.PG_STRING;
 
+console.log(connectionString);
+
 const pool = new Pool({
   connectionString: connectionString
 });
