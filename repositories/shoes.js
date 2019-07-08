@@ -4,8 +4,6 @@ types.setTypeParser(1700, val => parseFloat(val));
 
 const connectionString = process.env.PG_STRING;
 
-console.log(connectionString);
-
 const pool = new Pool({
   connectionString: connectionString
 });
@@ -39,4 +37,10 @@ async function addTrueToSizeReading(shoeId, reading) {
   await pool.query('INSERT INTO true_to_size_readings (shoe_id, true_to_size) VALUES ($1, $2)', [shoeId, reading]);
 }
 
-module.exports = {findAll: findAll, findById: findById, findByName: findByName, create: create, addTrueToSizeReading: addTrueToSizeReading};
+module.exports = {
+  findAll: findAll,
+  create: create,
+  findById: findById,
+  findByName: findByName,
+  addTrueToSizeReading: addTrueToSizeReading,
+};

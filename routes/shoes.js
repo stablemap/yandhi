@@ -13,11 +13,11 @@ router.post('/', async (req, res) => {
     res.status(400).send({message: 'Name string required'});
   } else {
     let existingShoe = await shoeRepository.findByName(req.body.name);
-    console.log(existingShoe);
     if (existingShoe) {
       res.status(400).send({message: 'Shoe with this name already exists'});
     } else {
       const newShoe = await shoeRepository.create(req.body.name);
+      console.log('Created shoe "%s" with id %d', req.body.name, newShoe.id);
       res.status(201).send(newShoe);
     }
   }
@@ -45,6 +45,7 @@ router.post('/:id(\\d+)/add_true_to_size', async (req, res) => {
       res.status(400).send({"message": "True-to-size readings must be between 1 and 5"});
     } else {
       await shoeRepository.addTrueToSizeReading(id, reading);
+      console.log('Added true-to-size reading of %d for shoe %d', reading, id);
       res.status(204).end();
     }
   }
